@@ -7,7 +7,8 @@
 %
 
 % Create the first meshgrid
-[X1,Y1] = meshgrid(-3:.1:3,-3:.1:3);
+
+[X1,Y1] = meshgrid(linspace(-3,3,300),linspace(-3,3,300));
 
 % Calculate the result of the first function
 F = (X1.^2 + 3*Y1.^2)*exp(-X1.^2-Y1.^2);
@@ -19,7 +20,7 @@ figure(2)
 contour(X1,Y1,F)
 
 % Create the second meshgrid
-[X2,Y2] = meshgrid(-2:.1:2,-4:.1:4);
+[X2,Y2] = meshgrid(linspace(-2,2,200),linspace(-4,4,400)); 
 
 % Calculate the result of the second function
 G = (-3*Y2./(X2.^2+Y2.^2+1));
@@ -31,7 +32,7 @@ figure(4)
 contour(X2,Y2,G)
 
 % Create the second meshgrid
-[X3,Y3] = meshgrid(-2:.1:2,-1:.1:1);
+[X3,Y3] = meshgrid(linspace(-2,2,200),linspace(-1,1,100)); 
 
 % Calculate the result of the second function
 H = abs(X3) + abs(Y3);
