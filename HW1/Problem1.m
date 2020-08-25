@@ -4,6 +4,7 @@
 %   This script plots a blue circle of radius 1 with a red
 %   regular hexagon inside. This corresponds to Problem 1 of
 %   Homework 1
+%
 
 % Create the angles for the circle and hexagon using r=1 as in the figure
 thetac = linspace(0, 2*pi, 201); 
