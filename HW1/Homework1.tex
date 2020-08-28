@@ -1,0 +1,165 @@
+\documentclass[12pt]{article}
+%%% HEADER: Change at your own risk :) %%%
+\usepackage{amsthm,graphicx, dsfont}
+\usepackage{epstopdf}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{rotating}
+\usepackage{hyperref}
+
+\textwidth = 6.5 in
+\textheight = 9 in
+\oddsidemargin = 0.0 in
+\evensidemargin = 0.0 in
+\topmargin = 0.0 in
+\headheight = 0.0 in
+\headsep = 0.0 in
+%%% HEADER (end) %%%%
+
+
+%%% Start editing from here %%%
+\title{MATH 315, Fall 2020 \\[3pt]
+Homework 1 
+\date{}}
+\author{James Nagy}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+Homework Team: Z \\
+\rule[0pt]{12cm}{1pt}
+\end{center}
+
+
+This assignment is associated with Chapter 1, and is meant to give you some practice with MATALB, and to introduce some of its capabilities. 
+You should work on this in the groups assigned for Homework 1; to find members of your group, on Canvas navigate to "People".  Also, please review the tips for collaborate work posted on the course Canvas home page. One person from your group should submit a pdf of solutions, as well as any relevant MATLAB scripts used to create your images. 
+
+\begin{enumerate}
+\item
+Write MATLAB code that will create the plot shown in the following figure:
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[width=6cm]{Circle} 
+\end{center}
+\end{figure}
+
+{\bf For your plot, flip the colors; that is, make the outer circle red, and the inner polygon with dots at the corner blue.}
+
+Write your code in a MATLAB script m-file.
+You can use the code given in Example 1.3.2 of the book as a template.
+Modify this \LaTeX\ document to replace the above circle and polygon plot with plot that your code produces. 
+
+\item
+To plot a surface, you can use a combination of the MATLAB functions:
+\begin{itemize}
+\item {\tt linspace} and {\tt meshgrid} to generate a set of $(x,y)$ coordinates, and
+\item {\tt mesh} or {\tt contour} to plot the surface.
+\end{itemize}
+Read the documentation pages on these functions, and use them to plot
+the surfaces of the following (use both {\tt mesh} and {\tt contour}):
+\begin{enumerate}
+\item
+$\displaystyle f(x,y) = (x^2 + 3y^2)e^{-x^2-y^2}\,, \quad -3 \leq x \leq 3, \quad -3 \leq y \leq 3$
+\item
+$\displaystyle g(x,y) = -3y/(x^2 + y^2 + 1)\,, \quad |x|\leq 2, \quad |y| \leq 4$
+\item
+$\displaystyle h(x,y) = |x| + |y|\,, \quad |x|\leq 2, \quad |y| \leq 1$
+\end{enumerate}
+Write a MATLAB script m-file that will generate all of these graphics, each in a separate figure. Modify this document so that it contains the graphics that your MATLAB code produces.
+\item
+The {\em Golden Ratio} is the number:
+\begin{equation}
+\label{gratio}
+  \phi = \frac{1}{2}(1 + \sqrt{5})\,.
+\end{equation}
+The golden ratio arises in many applications; we'll see at least
+one later in the semester.  The golden ratio gets its name from
+the {\em golden rectangle}, the rectangle with perfect aspect
+ratio.  It has the property that removing a square leaves a smaller
+rectangle with the same shape.
+
+The following Matlab statements can be used to generate a 
+picture of the golden rectangle:
+{\footnotesize
+\begin{verbatim}
+FS = 18; % choose a font size for annotating plots
+LW = 2;  % choose a line width magnification factor
+MS = 10; % choose a marker size magnification factor
+phi = (1 + sqrt(5))/2;
+x = [0 phi phi 0 0];
+y = [0 0 1 1 0];
+figure(1), clf
+plot(x, y, 'b', 'LineWidth', LW)
+hold on
+u = [1 1];
+v = [0 1];
+plot(u, v, 'b--', 'LineWidth', LW)
+text(phi/2, 1.05, '\phi', 'FontSize', FS)
+text((1+phi)/2, -0.05, '\phi - 1', 'FontSize', FS)
+text(-0.05, 0.5, '1', 'FontSize', FS)
+text(0.5, -0.05, '1', 'FontSize', FS)
+axis equal
+axis off
+set(gcf, 'color', 'white')
+\end{verbatim}
+}
+\begin{enumerate}
+\item
+Create a Matlab script file, called {\tt goldrect.m}, containing
+the above Matlab statements.  When executed, the script {\tt goldrect}
+should produce the following plot, except {\bf the color of your lines should be magenta not blue.}
+
+\begin{center}
+\includegraphics[width=8cm]{GoldenRect}
+\end{center}
+
+You should think about the purpose of some of the commands used in this code (e.g., look at {\tt doc axis}).
+\item
+To see how to find the special number, $\phi$, you should first equate the aspect
+ratios of the two rectangles to get the equation:
+$$
+  \frac{1}{\phi} = \frac{\phi - 1}{1}\,.
+$$
+Therefore, one way to find the value of $\phi$ given in (\ref{gratio}) is
+to find a root of the function:
+$$
+  f(x) = \frac{1}{x} - (x - 1)\,.
+$$
+Modify the script {\tt goldrect} so that it creates a second plot (in ``Figure 2")
+of the function, $f(x)$, on the interval $0 \leq x \leq 4$.
+
+The second plot should also contain a circle at the point $(\phi, 0)$;
+that is, it should indicate the root of $f(x)$ corresponding to the
+golden ratio.
+
+When the modified script is executed, it should produce the two graphs, except:
+\begin{itemize}
+\item
+{\bf The color of your lines in the left figure should be magenta,}
+\item
+{\bf the color of your curve on the right should be red}, and
+\item
+{\bf the color of your circle on the right plot should be black.}
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{cc}
+\includegraphics[width=6cm]{GoldenRect} &
+\includegraphics[width=6cm]{GoldenRectFun}
+\end{tabular}
+\end{center}
+
+\item
+It may not be obvious how to find the roots of $f(x)$.  Fortunately
+there is an easier way!  There
+is a quadratic equation that has, as one of its roots, the
+golden ratio, $\phi$.  Find this quadratic equation, and 
+show that one of its roots is $\phi$. [This is a simple mathematics problem, not a MATLAB problem. In your write up you should describe the simple mathematics problem, and say what well-known formula from high school math is used to solve it.]
+\end{enumerate}
+Modify this \LaTeX\ document so that it contains your mathematical explanations and your plots.
+
+\end{enumerate}
+\end{document}
