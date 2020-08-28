@@ -11,7 +11,7 @@
 [X1,Y1] = meshgrid(linspace(-3,3,300),linspace(-3,3,300));
 
 % Calculate the result of the first function
-F = (X1.^2 + 3*Y1.^2)*exp(-X1.^2-Y1.^2);
+F = (X1.^2 + 3*Y1.^2).*exp(-X1.^2-Y1.^2);
 
 % create plots, first mesh and then contour, in different figures
 figure(1)
