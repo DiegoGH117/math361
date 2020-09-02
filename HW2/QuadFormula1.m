@@ -8,7 +8,7 @@ function r = QuadFormula1(coeffs)
 %
 %  Output:     r - vector containing the two roots of p(x) = 0.
 %
-%1
+%
 r = zeros(2,1); % vector that will contain the two roots
 % separating the coefficients into individual variables
 a = coeffs(1); 

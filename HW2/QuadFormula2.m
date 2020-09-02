@@ -9,16 +9,18 @@ function r = QuadFormula2(coeffs)
 %
 %  Output:     r - vector containing the two roots of p(x) = 0.
 %
-%1
+%
 r = zeros(2,1); % vector that will contain the two roots
 % separating the coefficients into individual variables
 a = coeffs(1); 
 b = coeffs(2);
 c = coeffs(3);
-% we chose the scaling factor s to be the mas of the coefficients
-s = max(coeffs);
-% discriminant
-d = s*sqrt((b/s)^2 - (4*a*c)/s);
+% we chose the scaling factor s to be the max of the absolute
+% values of the coefficients
+s = max(abs(coeffs));
+% discriminant, notice every coefficient is scaled before any
+% operation may take place
+d = s*sqrt((b/s)^2 - (4*(a/s)*(c/s)));
 % denominator
 a2 = 2*a;
 % the two solutions using the quadratic formula
