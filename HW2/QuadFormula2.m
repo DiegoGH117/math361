@@ -1,7 +1,8 @@
-function r = QuadFormula1(coeffs)
+function r = QuadFormula2(coeffs)
 %
 %  Given coefficients of a quadratic polynomial, p(x), this function
-%  computes the roots of p(x) = 0 using the quadratic formula.
+%  computes the roots of p(x) = 0 using the quadratic formula. It scales
+%  some operations so that overflow can be avoided. 
 %
 %  Input: coeffs - vector containing the coefficents of p(x),
 %                  [a, b, c], where p(x) = a*x^2 + b*x + c.
@@ -14,8 +15,10 @@ r = zeros(2,1); % vector that will contain the two roots
 a = coeffs(1); 
 b = coeffs(2);
 c = coeffs(3);
+% we chose the scaling factor s to be the mas of the coefficients
+s = max(coeffs);
 % discriminant
-d = sqrt(b^2 - 4*a*c);
+d = s*sqrt((b/s)^2 - (4*a*c)/s);
 % denominator
 a2 = 2*a;
 % the two solutions using the quadratic formula
