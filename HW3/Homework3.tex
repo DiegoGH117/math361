@@ -1,0 +1,130 @@
+\documentclass[12pt]{article}
+%%% HEADER: Change at your own risk :) %%%
+\usepackage{amsthm,graphicx, dsfont}
+\usepackage{epstopdf}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{rotating}
+\usepackage{hyperref}
+
+\textwidth = 6.5 in
+\textheight = 9 in
+\oddsidemargin = 0.0 in
+\evensidemargin = 0.0 in
+\topmargin = 0.0 in
+\headheight = 0.0 in
+\headsep = 0.0 in
+%%% HEADER (end) %%%%
+
+
+%%% Start editing from here %%%x
+\title{MATH 315, Fall 2020 \\[3pt]
+Homework 3
+\date{}}
+\author{James Nagy}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+Homework Team \textit{(team number)}: \textit{(team name)} \\
+\rule[0pt]{12cm}{1pt}
+\end{center}
+
+
+This assignment is associated with Chapter 3, Solution of Linear Systems. It illustrates numerical methods for solving linear systems of equations, i.e. $A{x}={b}$, and also some complexities introduced when solving this problem on a computer.  It should also reinforce some of the theory of vector norms.
+%
+\begin{enumerate}
+\item Systems of linear equations have a unique solution when the matrix $A$ is nonsingular, i.e. when $\det(A) \ne 0$. Consider the formula for the determinant of a $2\times 2$ matrix.  
+\begin{enumerate}
+\item What are two numerical issues introduced in Chapter 2 that may arise when computing this value?
+\item Develop two matrices that suffer from these issues.  Assume a floating point system that represents the mantissa with 3 digits.
+\end{enumerate}
+
+\item 
+
+\begin{enumerate}
+\item Write a MATLAB code that will implement row-oriented forward substitution (see Fig. 3.5).  Your code should be written as a function m-file, with input $A$ (an $n \times n$ matrix) and $b$ (an $n \times 1$ vector), and output the solution $x$ (the $n \times 1$ vector that solves $Ax=b$).
+
+More specifically, the beginning of your code should contain the following:
+{\footnotesize
+\begin{verbatim}
+function x = RowSolve(A,b)
+% This function computes the solution of the linear system Ax=b using
+% forward substitution, using a row-oriented approach
+% 
+%   Input:  A - nxn matrix
+%           b - nx1 vector
+% 
+%   Output: x - solution of the linear system
+% 
+
+n = length(b);
+x = zeros(n,1);
+
+for ...
+
+\end{verbatim}
+}
+
+\item Write a MATLAB code that will implement column-oriented forward substitution (see Fig. 3.5).  Your code should be written as a function m-file, with input $A$ (an $n \times n$ matrix) and $b$ (an $n \times 1$ vector), and output the solution $x$ (the $n \times 1$ vector that solves $Ax=b$).
+More specifically, the beginning of your code should contain the following:
+{\footnotesize
+\begin{verbatim}
+function x = ColSolve(A,b)
+% This function computes the solution of the linear system Ax=b using
+% forward substitution, using a column-oriented approach
+% 
+%   Input:  A - nxn matrix
+%           b - nx1 vector
+% 
+%   Output: x - solution of the linear system
+% 
+
+n = length(b);
+x = zeros(n,1);
+
+for ...
+
+\end{verbatim}
+}
+
+\item The following Matlab statements can be used to explore the computational cost of each function and compare and assess both solutions:
+{\footnotesize
+\begin{verbatim}
+n = 10;
+A = tril(rand(n));
+b = rand(n,1);
+
+disp('row-oriented:')
+tic
+xR = RowSolve(A,b);
+toc
+
+disp('column-oriented:')
+tic
+xC = ColSolve(A,b);
+toc
+
+disp('infinity norm of difference:')
+norm((xC - xR), Inf)
+
+disp('infinity norm of residual:')
+norm((b - A*xR), Inf)
+\end{verbatim}
+}
+Create a Matlab script file, called containing the above Matlab statements. Run your script multiple times for various $n$, e.g. $n = 10, 100, 1000, ...$.  Does one approach produce a solution faster than the other?  Does $n$ influence this?  Do the two approaches produce the same results? Is the residual zero? Discuss your findings and rationale for them.  
+
+\item What is a line of code that serves the same function as \texttt{norm((xC - xR), Inf)}?
+
+\end{enumerate}
+
+
+\item Show that the $\infty$-norm satisfies the properties of a vector norm.
+
+
+
+\end{enumerate}
+\end{document}
