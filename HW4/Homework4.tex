@@ -1,0 +1,119 @@
+\documentclass[12pt]{article}
+%%% HEADER: Change at your own risk :) %%%
+\usepackage{amsthm,graphicx, dsfont}
+\usepackage{epstopdf}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{rotating}
+\usepackage{hyperref}
+
+\textwidth = 6.5 in
+\textheight = 9 in
+\oddsidemargin = 0.0 in
+\evensidemargin = 0.0 in
+\topmargin = 0.0 in
+\headheight = 0.0 in
+\headsep = 0.0 in
+%%% HEADER (end) %%%%
+
+
+%%% Start editing from here %%%x
+\title{MATH 315, Fall 2020 \\[3pt]
+Homework 4
+\date{}}
+\author{James Nagy}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+Homework Team \textit{(team number)}: \textit{(team name)} \\
+\rule[0pt]{12cm}{1pt}
+\end{center}
+
+
+This assignment is associated with Chapter 3, Solution of Linear Systems. It illustrates numerical methods for solving linear systems of equations, i.e. $A{x}={b}$, and also some complexities introduced when solving this problem on a computer.
+
+NOTE: For hand calculations in the first problem, you do not need to \LaTeX\ the details and steps -- you can do this with pen or pencil, scan or save as a PDF file, and attach to the  \LaTeX\ parts.
+%
+\begin{enumerate}
+%\item Consider the operations used to conduct GEPP.
+%\begin{enumerate}
+%\item What are two numerical issues that may arise when implementing this algorithm?
+%\item Develop two matrices that suffer from these issues (e.g. in stage 1).  Assume a floating point system that represents the mantissa with 3 digits.
+%\end{enumerate}
+
+\item Consider the following system of equations:
+\begin{eqnarray*}
+x_1+x_2+2x_3 &=& 8\\
+-x_1-2x_2+3x_3 &=& 1\\
+3x_1-7x_2+4x_3 &=&10\\
+\end{eqnarray*}
+\begin{enumerate}
+%\item Solve for $x$ using Gaussian elimination with partial pivoting (by hand).  Implement the MATLAB function \texttt{gepp} on page 105 of your text (page 53 of Chapter 3), and compare your results to those computed when executing this function for the same problem. \label{GEPP}
+\item Use Gaussian elimination to find the $A=LU$ factorization of $A$ (by hand).  Which built-in MATLAB function can be used to determine the $LU$ factorization?  Discuss the results you obtain when you implement this function. \label{ALU}
+\item Use Gaussian elimination to find the $PA=LU$ factorization of $A$ (by hand).  Which built-in MATLAB function can be used to determine this factorization? 
+\item Use your factorization from \ref{ALU} to determine $A^{-1}.$ (\textit{Hint: Recall that $A*A^{-1}=A*X=I$.}) 
+%Consider instead using Gaussian elimination with partial pivoting (\ref{GEPP}) to find the inverse.  Discuss one benefit of factorization.
+Discuss one benefit of using the factorization for this problem. ({\em Hint: The next problem might give you some ideas.})
+\end{enumerate}
+%\item Explain why the elimination matrices, $M_i$, used in the LU factorization are nonsingular.
+\item
+In this problem we consider solving $Ax=b_k$ for a given $n \times n$ matrix $A$, and multiple right hand side vectors, $b_1, b_2, \ldots, b_m$. We will assume these vectors are stored in an $n \times m$ matrix B; that is,
+$$
+B = \left[ \begin{array}{cccc} b_1 & b_2 & \cdots & b_m \end{array} \right].
+$$
+We could:
+\begin{itemize}
+\item 
+Use Gaussian elimination to solve each system $Ax = b_k$, or 
+\item 
+first compute the $PA=LU$ factorization, and then compute the solutions by using only backward and forward solves.
+\end{itemize}
+The purpose of this problem is to compare the time it takes for these two approaches. Here is code to illustrate how to do this comparison with 50 right hand side vectors:
+\begin{verbatim}
+function [t1, t2] = CompareSpeed(n)
+% (add comments here)
+n_rhs = 50; n_runs = 10;
+A  = rand(n); B = rand(n,n_rhs);
+t1_sum = 0;
+for j = 1:n_runs
+    tic
+    for k = 1:n_rhs
+        x = A\B(:,k);
+    end
+    t1_sum = t1_sum + toc;
+end
+t1 = t1_sum/n_runs;
+
+t2_sum = 0;
+for j = 1:n_runs
+    tic
+    [L, U, P] = lu(A);
+    for k = 1:n_rhs
+        x = U\(L\(P*B(:,k)));
+    end
+    t2_sum = t2_sum + toc;
+end
+t2 = t2_sum/n_runs;
+\end{verbatim}
+\begin{enumerate}
+\item
+Implement and run the above function, and test for $n=50$.
+\item
+Add a few lines of comments (see the line {\tt (add comments here)}) to explain the purpose of this function, inputs and outputs. 
+\item
+What is the purpose of the loop {\tt for j = 1:n\_runs}?
+\item
+Write a script that will run the function for $n = 50, 100, 200, 400, 800, 1600$, and plot the timings using both {\tt plot} and {\tt semilogy}. Your plots should have matrix size, $n$, on the $x$-axis, and time to solve on the $y$-axis. That is, your plots should look similar to the following, but you should add a legend to each of the plots to indicate which approach is associated with the blue curve, and which is associated with the red.
+\end{enumerate}
+\begin{center}
+\begin{tabular}{ccc}
+\includegraphics[width=7cm]{PlotTimings} & \hspace*{12pt} &
+\includegraphics[width=7cm]{SemilogyTimings} 
+\end{tabular}
+\end{center}
+\end{enumerate}
+\end{document}
