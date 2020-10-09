@@ -1,0 +1,223 @@
+\documentclass[12pt]{article}
+%%% HEADER: Change at your own risk :) %%%
+\usepackage{amsthm,graphicx, dsfont}
+\usepackage{epstopdf}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{rotating}
+\usepackage{hyperref}
+
+\textwidth = 6.5 in
+\textheight = 9 in
+\oddsidemargin = 0.0 in
+\evensidemargin = 0.0 in
+\topmargin = 0.0 in
+\headheight = 0.0 in
+\headsep = 0.0 in
+%%% HEADER (end) %%%%
+
+
+%%% Start editing from here %%%x
+\title{MATH 315, Fall 2020 \\[3pt]
+Homework 5
+\date{}}
+\author{NAME: }
+
+\begin{document}
+\maketitle
+
+{\bf Important Information:} This will {\bf not} be a team assignment. You must work on this on your own, and turn in your own solutions.  
+
+You should not ask friends or anyone but me for help before Friday's lab. You will have an opportunity to work with a small group in the lab on Friday, and you can then ask that small group questions if you are having trouble. Your lab group can provide help and guidance to each other, but they {\bf should not give} solutions to each other. 
+
+I am happy to provide individual guidance during office hours, so please do not hesitate to ask me for help.
+
+\begin{center}
+\rule[0pt]{12cm}{1pt}
+\end{center}
+
+
+This assignment is associated with Chapter 4, Curve Fitting -- we experiment with MATLAB's {\tt polyval} and {\tt polyfit} functions.
+You should write one script m-file to perform all of the experiments and produces all of the plots outlined in the assignment.
+
+
+\begin{enumerate}
+\item 
+Consider the function 
+$$
+   f(x) = \sin(x+\sin(2*x))\,, \quad -\frac{\pi}{2} \leq x \leq \frac{3\pi}{2}\,.
+$$
+In your script, define this function using MATLAB's function handle approach:
+\begin{verbatim}
+     f = @(x) sin(x + sin(2*x));
+\end{verbatim}
+Now add commands in your script to plot this function for 1000 equally spaced points in the interval $-\frac{\pi}{2} \leq x \leq \frac{3\pi}{2}$.
+You should:
+\begin{itemize}
+\item
+Save the 1000 points in a vector called {\tt xvals} (you will need these later).
+\item 
+Use the {\tt axes} command to set the font size of the plot to 18 point.
+\item
+Use the {\tt LineWidth} option to increase the line thickness by a factor of 2.
+\item
+Use the {\tt axis} command so that the plot displays the $x$-axis from -2 to 5, and the $y$-axis from -1.75 to 2.5.
+\end{itemize}
+That is, the plot should look like:
+\begin{center}
+\includegraphics[width=6cm]{Prob1Plot}
+\end{center}
+\item[]
+\item
+Next create 16 equally spaced points in the interval $-\frac{\pi}{2} \leq x \leq \frac{3\pi}{2}$, and compute the
+corresponding values of $f(x)$.  
+\begin{itemize}
+\item
+Store the $x$ data in a vector called {\tt x\_eq}.
+\item
+Store the  
+corresponding $f(x)$ values in a vector called {\tt f\_eq}. 
+\item
+Plot these 16 points on top of your plot as red circles.
+\item
+The line thickness for your red circles should be the same as the previous problem.
+\item
+Your axis should display the same as in the previous problem.
+\end{itemize}
+
+Your plot should now look as follows: 
+\begin{center}
+\includegraphics[width=6cm]{Prob2Plot}
+\end{center}
+\item[]
+\item
+Use MATLAB's {\tt polyfit} function to construct the coefficients of the interpolating polynomial through the
+16 points.  Then use {\tt polyval} to evaluate the polynomial at the {\tt xvals} from problem 1,
+and plot using magenta color, on the same plot as the previous problem.  Make sure:
+\begin{itemize}
+\item
+Your line thickness should be the same as in the previous two problems.
+\item
+Your axis should display the same as in the previous problem.
+\end{itemize}
+Your plot should now look 
+as follows:
+\begin{center}
+\includegraphics[width=6cm]{Prob3Plot}
+\end{center}
+\item[]
+\item[]
+\item
+Now repeat exercises 1-3, but in exercises 2 and 3, instead of using 16 equally spaced points
+for interpolation, use the 16 Chebyshev points:
+$$
+  x_i = \frac{b+a}{2} - \frac{b-a}{2} \cos\left( \frac{2i+1}{2N+2}\pi\right)\, \quad i = 0, 1, \ldots, N
+$$
+where $N = 15$, $a = -\frac{\pi}{2}$, and $b = \frac{3\pi}{2}$. \\
+You should use a new figure to generate this plot, and you should use the same line thickness and axis limits
+as in the previous problems.  
+\item
+Suppose we are given data points $(x_i,f_i)$, $i = 0, 1, \ldots, N$, and we want to construct
+and plot the Lagrange form of the polynomial that interpolates this data.  That is, we want
+to construct $p(x)$ such that $p(x_i) = f_i$, $i = 0, 1, 2, \ldots, N$, where $p(x)$ is written in
+the Lagrange form:
+$$
+  p(x) = f_0 L_0(x) + f_1 L_1(x) + \cdots + f_N L_N(x) = \sum_{j=0}^N f_j L_j(x)
+$$
+and
+$$
+  L_j(x) = \frac{(x-x_0)(x-x_1)\cdots(x-x_{j-1})(x-x_{j+1})\cdots(x-x_N)}{(x_j-x_0)(x_j-x_1)\cdots(x_j-x_{j-1})(x_j-x_{j+1})\cdots(x_j-x_N)}
+$$
+There is no work to be done to ``construct" the polynomial, but to plot $p(x)$, we need
+to be able to efficiently evaluate it at $x$-values.   This problem outlines the process.
+\begin{enumerate}
+\item
+First the define weights from the denominators in $L_j(x)$:
+$$
+  w_j = \frac{1}{(x_j-x_0)(x_j-x_1)\cdots(x_j-x_{j-1})(x_j-x_{j+1})\cdots(x_j-x_N)}
+$$
+Also define a new polynomial, $L(x)$ so that 
+$$
+  L_j(x) = L(x) \frac{w_j}{x-x_j}\,.
+$$
+What is $L(x)$?
+\item
+Show that $w_j = 1/L'(x_j)$.
+\item
+Show that the Lagrange form of $p(x)$ can be rewritten as:
+$$
+  p(x) = L(x)\sum_{j=0}^N \frac{w_j}{x-x_j}f_j
+$$
+\item
+Show that
+$$
+  1 = L(x)\sum_{j=0}^N \frac{w_j}{x-x_j}
+$$
+Hint: In part (c), if $f_0 = f_1 = \cdots = f_N = 1$, what does that say about the 
+interpolating polynomial?
+\item
+From parts (c) and (d), for a general $p(x)$, show that we can write:
+$$
+  p(x) = \frac{p(x)}{1} = \frac{\displaystyle \sum_{j=0}^N \frac{w_j}{x-x_j}f_j}{\displaystyle \sum_{j=0}^N \frac{w_j}{x-x_j}}
+$$
+\item
+We are now ready to write some code to evaluate $p(x)$.  You will need to write two functions.  The
+first function should compute the weights $w_j$ given the data $x_0, x_1, \ldots, x_N$.  That is,
+the beginning of your function should look like:
+\vspace*{12pt}
+{\footnotesize
+\begin{verbatim}
+   function w = LagrangeWeights(x_data)
+   %
+   %  This function computes weights 
+   %                                      1
+   %    w_j = -----------------------------------------------------------
+   %          (x_j-x_0)(x_j-x_1)...(x_j-x_{j-1})(x_j-x_{j+1})...(x_j-x_N)
+   %
+   %  which are used in the Lagrange form of an interpolating polynomial.
+   %
+   %  Input:  x_data - vector of length n=N+1 containing x_i interpolation data
+   % 
+   %  Output:      w - vector of length n containing the weights
+   %
+\end{verbatim}
+}
+\vspace*{12pt}
+The second function evaluates the interpolating polynomial using the fraction given
+in part(e).  The beginning of this function should look like:
+\vspace*{12pt}
+{\footnotesize
+\begin{verbatim}
+   function pvals = LagrangeEval(w, x_data, f_data, xvals)
+   %
+   %  This function evaluates the Lagrange form of an interpolating
+   %  polynomoal at xvals.
+   % 
+   %  Input:      w - vector containing weights, as computed by the function
+   %                  LagrangeWeights
+   %         x_data - vector of length n containing x_i interpolation data
+   %         f_data - vector of length n containing f_i interpolation data
+   %          xvals - vector containing a bunch of x-values at which we want
+   %                  to compute p(xvals)
+   %
+   %  Output: pvals - vector, same shape as xvals, containing p(xvals)
+   %
+\end{verbatim}
+}
+\end{enumerate}
+\item
+Using your Lagrange interpolation codes, 
+repeat the previous experiments with equally spaced points and Chebyshev points, again with
+$$
+   f(x) = \sin(x+\sin(2*x))\,, \quad -\frac{\pi}{2} \leq x \leq \frac{3\pi}{2}\,.
+$$
+Use two new figure windows to display the two plots for this problem.
+\item
+Discuss any conclusions you can make from these experiments. 
+For example, do you prefer equally spaced points to the Chebyshev points? Explain.
+Do you prefer the power series approach used by {\tt polyfit} and {\tt polyval} over the
+code you wrote for the Lagrange form?  Explain.
+\end{enumerate}
+\end{document}
