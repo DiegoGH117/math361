@@ -182,7 +182,7 @@ ax.FontSize = 18; % fontsize of 18
 
 % get the structure for the Hermit cubic polynomials using only the weeks and
 % measurements from part d
-H = spline(d_weeks, d_measurements);
+H = pchip(d_weeks, d_measurements);
 
 % create the plot with these points with the polynomial splines using
 % ppval
