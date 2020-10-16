@@ -183,5 +183,5 @@ fprime_approx3 = gradient(f(linspace(-1,1,11)), h);
 fprintf(1,'\n\nCOMPARISON BETWEEN NUMERICAL DERIVATIVES:========================================================\n');
 fprintf(1,"  The derivative of the interpolating polynomial (using polyfit), f'(x=1) =   %17.14f \n", double(subs(fprime_approx, 1)));
 fprintf(1,"  The derivative of the interpolating polynomial (using splines), f'(x=1) =    %17.14f \n", double(subs(fprime_approx2, 1)));
-fprintf(1,"  The derivative of the function using gradient,                  f'(x=1) =    %17.14f \n", fprime_approx3(1));
+fprintf(1,"  The derivative of the function using gradient                   f'(x=1) =    %17.14f \n", fprime_approx3(11));
 
