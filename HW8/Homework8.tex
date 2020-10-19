@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+%%% HEADER: Change at your own risk :) %%%
+\usepackage{amsthm,graphicx, dsfont}
+\usepackage{epstopdf}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{url}
+\usepackage{bm}
+\usepackage{rotating}
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+\textwidth = 6.5 in
+\textheight = 9 in
+\oddsidemargin = 0.0 in
+\evensidemargin = 0.0 in
+\topmargin = 0.0 in
+\headheight = 0.0 in
+\headsep = 0.0 in
+%%% HEADER (end) %%%%
+
+
+%%% Start editing from here %%%x
+\title{MATH 315, Fall 2020 \\[3pt]
+Homework 8
+\date{}}
+\author{James Nagy}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+Homework Team \textit{(team number)}: \textit{(team name)} \\
+\rule[0pt]{12cm}{1pt}
+\end{center}
+
+
+This assignment is associated with Chapter 5, Differentiation and Integration. It illustrates numerical methods for evaluating the definite integral of a function.
+\begin{enumerate}
+\item \begin{enumerate}
+\item Consider the function $q_2(x)$ which is the polynomial of degree
+two that interpolates the function $f(x)$ at the integration interval endpoints
+$x = a$, $x=\frac{b-a}{2}$, and $x = b$.  Use the Lagrange form of the quadratic interpolating polynomial to derive a quadrature rule. \textit{(Hint: you will integrate the interpolating polynomial over the interval $[a,b]$.)}\label{rule}
+\item What is the name of this quadrature rule? 
+\end{enumerate}
+\item Evaluate the following integral:
+\begin{equation*}
+\int^{\pi/2}_0 (8 + 4\cos x) \,dx
+\end{equation*}
+\begin{enumerate}
+\item \label{a} analytically \label{true}
+\item using {\tt syms} and {\tt int} in MATLAB)
+\item using single application of the trapezoidal rule \label{trap}
+\item using single application of the quadrature rule derived in \ref{rule}. \label{rule_app}
+\item Use \ref{true} to determine the percent relative error ($\varepsilon_t$) of \ref{trap} and \ref{rule_app}. How can this error be reduced?
+\end{enumerate}
+\pagebreak
+\item 
+Write a short MATLAB code that will implement the composite trapezoidal rule using tabular data. Your code should be written as a function m-file, with input data, x and y, and output I, the approximation of the integral. You should make your code robust enough to handle x data that is not equally spaced. The beginning of your code might contain the following:
+
+{\footnotesize
+\begin{verbatim}
+function I = CompTrap(x,f)
+% This function approximates integrates tabular data using the composite
+% trapezoidal rule.
+% 
+%   Input:  x - length n vector of x data
+%           y - length n vector of f data
+% 
+%   Output: I - approximation of the integral
+% 
+n = length(x);
+sum = 0;
+
+for ...
+
+\end{verbatim}
+}
+\end{enumerate}
+\end{document}
