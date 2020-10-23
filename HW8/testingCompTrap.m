@@ -17,6 +17,9 @@ y1 = x1.^3;
 % test our implementation
 I1 = CompTrap(x1, y1);
 
+% print result
+fprintf(1,"  Result of the first test =   %17.14f \n", I1);
+
 %%%%%%%    test 2     %%%%%%%%
 % in this one we approximate the integral of f(x) = x^2 in the interval
 % [1,9] using two unequally spaced subintervals
@@ -27,6 +30,9 @@ y2 = x2.^2;
 
 % test our implementation
 I2 = CompTrap(x2, y2);
+
+% print result
+fprintf(1,"  Result of the second test =   %17.14f \n", I2);
 
 %%%%%%%    test 3     %%%%%%%%
 % try giving two vectors of unequal lengths to our implementation and see
